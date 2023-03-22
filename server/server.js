@@ -5,7 +5,7 @@ const PORT = 4000;
 const app = express();
 
 app.get('/', (req, res) => {
-    res.send("Hello World");
+    res.send("8i Access Control API is available !");
 });
 
 // test DB connection

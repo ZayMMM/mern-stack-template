@@ -38,7 +38,9 @@ bower_components
 build/Release
 
 # Dependency directories
-client/node_modules/
+admin/node_modules/
+admin-web/node_modules/
+admin-web/node_modules/
 server/node_modules/
 jspm_packages/
 
