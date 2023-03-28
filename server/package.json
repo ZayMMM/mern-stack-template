@@ -26,6 +26,7 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "sequelize": "^6.30.0",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "winston-mysql-transport": "^0.1.2"
   }
 }

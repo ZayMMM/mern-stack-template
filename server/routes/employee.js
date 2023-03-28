@@ -1,13 +1,15 @@
 const express = require("express");
 const employeeRouter = express.Router();
-const EmployeeController = require('../controller/EmployeeController');
+const employeeController = require('../controller/employeeController');
+const auth = require('../middleware/auth');
 
 employeeRouter
     .route("/")
-    .get(EmployeeController.findAll);
+    .get(employeeController.findAll);
 
 employeeRouter
+    .use(auth)
     .route("/:employeeId")
-    .get(EmployeeController.findOne);
+    .get(employeeController.findOne);
 
 module.exports = employeeRouter;

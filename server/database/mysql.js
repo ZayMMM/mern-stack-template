@@ -1,19 +1,29 @@
-const mysql = require('mysql2');
+const dbConfig = require("./db.config");
 
-// Create the connection pool. The pool-specific settings are the defaults
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    //password: 'root123!@#',
-    password: 'root123',
-    database: 'eighti_access_control',
-    waitForConnections: true,
-    connectionLimit: 10,
-    maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
-    idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
-    queueLimit: 0
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+  host: dbConfig.HOST,
+  dialect: dbConfig.dialect,
+  operatorsAliases: false,
+  define: {
+    timestamps: false
+},
+
+  pool: {
+    max: dbConfig.pool.max,
+    min: dbConfig.pool.min,
+    acquire: dbConfig.pool.acquire,
+    idle: dbConfig.pool.idle
+  }
 });
 
- module.exports= {
-    pool
- };
+const db = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.employee = require("../models/employee.model")(sequelize, Sequelize);
+
+module.exports = db;
+
+ 
