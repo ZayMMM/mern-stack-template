@@ -1,0 +1,17 @@
+{
+    "database": {
+        "host": "localhost",
+        "user": "root",
+        "password": "root123",
+        "connectionLimit": 10,
+        "database": "eighti_access_control",
+        "debug": false
+    },
+    "server": {
+        "port": 5000,
+        "pageSize": 100,
+        "logger": {
+            "format": "tiny"
+        }
+    }
+}
