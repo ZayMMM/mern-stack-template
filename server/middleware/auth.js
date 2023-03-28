@@ -22,7 +22,7 @@ const auth = async (req, res, next) => {
       res.status(401).json({ error: "Unauthorized" });
     }
   }else{
-    res.status(401).json({ error: "Unauthorized.." });
+    res.status(401).json({ error: "Unauthorized" });
   }
 };
 
