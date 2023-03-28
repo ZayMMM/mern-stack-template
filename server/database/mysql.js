@@ -4,7 +4,8 @@ const mysql = require('mysql2');
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'root123!@#',
+    //password: 'root123!@#',
+    password: 'root123',
     database: 'eighti_access_control',
     waitForConnections: true,
     connectionLimit: 10,
@@ -13,13 +14,6 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-const connectDB = pool.query('SELECT SYSDATE()', (err, results, fields) => {
-    console.log(err); // error contains the error message
-    console.log(results); // results contains rows returned by server
-    //console.log(fields); // fields contains extra meta data about results, if available
-});
-
  module.exports= {
-    pool,
-    connectDB
+    pool
  };
