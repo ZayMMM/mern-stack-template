@@ -1,24 +1,27 @@
 const { pool } = require('../database/mysql');
 
-function query(sql, params) {
-    const [results] = pool.query(sql, params);
-
-    return results;
+async function singleQuery(sql, params) {
+  pool.query(sql,
+    (err, results, fields) => {
+      console.log(err); // error contains the error message
+      //console.log(results[0]); // results contains rows returned by server
+      return results[0];
+    });
 }
 
 function getOffset(currentPage = 1, listPerPage) {
-    return (currentPage - 1) * [listPerPage];
+  return (currentPage - 1) * [listPerPage];
+}
+``
+function emptyOrRows(rows) {
+  if (!rows) {
+    return [];
   }
-  
-  function emptyOrRows(rows) {
-    if (!rows) {
-      return [];
-    }
-    return rows;
-  }
+  return rows;
+}
 
 module.exports = {
-    query,
-    getOffset,
-    emptyOrRows
+  singleQuery,
+  getOffset,
+  emptyOrRows
 };
