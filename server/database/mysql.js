@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 
 // Create the connection pool. The pool-specific settings are the defaults
-const connectionPool = mysql.createPool({
+const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'root123',
@@ -13,12 +13,12 @@ const connectionPool = mysql.createPool({
     queueLimit: 0
 });
 
-const connectDB = connectionPool.query('SELECT SYSDATE()', (err, results, fields) => {
+const connectDB = pool.query('SELECT SYSDATE()', (err, results, fields) => {
     console.log(results); // results contains rows returned by server
     //console.log(fields); // fields contains extra meta data about results, if available
 })
 
  module.exports= {
-    connectionPool,
+    pool,
     connectDB
  };

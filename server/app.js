@@ -4,7 +4,7 @@ const app = express();
 
 const bodyParser = require('body-parser');
 const routes = require('./routes/index');
-const {connectDB} = require('./database/mysql');
+//const {connectDB} = require('./database/mysql');
 
 app.use(bodyParser.urlencoded({
     extended: true
