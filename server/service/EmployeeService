@@ -1,0 +1,23 @@
+const db = require('../database/mysql');
+const { employeeModel } = db.employee;
+
+class EmployeeService {
+
+    constructor(employeeModel) {
+        this.employeeModel = employeeModel;
+    }
+
+    async findAll(condition) {
+        const employeeData = this.employeeModel.findAll(({ where: condition }));
+        employeeData.then((data) => {
+            const myArray = data.map((result) => {
+                return result.get({plain: true});
+            });
+            console.log(myArray);
+            //console.log(myArray[0].employeeId); // employee id
+        })
+        return await employeeData;
+    }
+}
+
+module.exports = EmployeeService;

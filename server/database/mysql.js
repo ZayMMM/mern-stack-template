@@ -22,7 +22,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.employee = require("../models/employee.model")(sequelize, Sequelize);
+db.employee = require('../models/employeeModel')(sequelize, Sequelize);
 
 module.exports = db;
 

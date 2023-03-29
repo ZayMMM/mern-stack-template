@@ -1,8 +1,12 @@
 const { exceptions } = require('winston');
 const db = require('../database/mysql');
+const EmployeeService = require('../service/EmployeeService');
 const Employee = db.employee;
 const Op = db.Sequelize.Op;
 
+
+// Instantiate the employee service
+const employeeService = new EmployeeService(Employee);
 
 
 // Create and Save a new Tutorial
@@ -12,19 +16,17 @@ exports.create = (req, res) => {
 
 // Retrieve all Employee from the database.
 exports.findAll = (req, res) => {
-const firstName = req.query.firstName;
-var condition = firstName ? { firstName: { [Op.like]: `%${firstName}%` } } : null;
-
-Employee.findAll({ where: condition })
-  .then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving employees."
+  const firstName = req.query.firstName;
+  var condition = firstName ? { firstName: { [Op.like]: `%${firstName}%` } } : null;
+  employeeService.findAll(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Some error occurred while retrieving employees."
+      });
     });
-  });
 };
 
 // Find a single Employee with an id
