@@ -1,8 +1,7 @@
 require("express-async-errors");
 const express = require('express');
 const app = express();
-
-require('./utils/logging');
+const appLogger = require('./middleware/logger');
 const bodyParser = require('body-parser');
 const routes = require('./routes/index');
 
@@ -12,6 +11,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+app.use(appLogger);
 app.use(bodyParser.json());
 app.use(routes);
 

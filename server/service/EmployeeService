@@ -1,5 +1,7 @@
+const { logger } = require('../utils/logger');
 const db = require('../database/mysql');
 const { employeeModel } = db.employee;
+const Op = db.Sequelize.Op;
 
 class EmployeeService {
 
@@ -7,16 +9,21 @@ class EmployeeService {
         this.employeeModel = employeeModel;
     }
 
-    async findAll(condition) {
-        const employeeData = this.employeeModel.findAll(({ where: condition }));
-        employeeData.then((data) => {
-            const myArray = data.map((result) => {
+    async findAll(firstName) {
+        var condition = firstName ? { firstName: { [Op.like]: `%${firstName}%` } } : null;
+        const employeeList = this.employeeModel.findAll(({ where: condition }));
+        await employeeList.then((data) => {
+            data.map((result) => {
                 return result.get({plain: true});
             });
-            console.log(myArray);
-            //console.log(myArray[0].employeeId); // employee id
-        })
-        return await employeeData;
+        });
+        return await employeeList;
+    }
+
+    async findEmployeeByEmpId(empId){
+        var condition = empId ? {employeeId : {[Op.eq]: `${empId}`}} : null;
+        const employee = this.employeeModel.findOne(({ where: condition}));
+        return await employee;
     }
 }
 

@@ -1,7 +1,7 @@
 module.exports = {
     HOST: "localhost",
     USER: "root",
-    PASSWORD: "root123!@#",
+    PASSWORD: "root123",
     DB: "eighti_access_control",
     dialect: "mysql",
     pool: {

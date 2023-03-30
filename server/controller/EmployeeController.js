@@ -1,8 +1,8 @@
-const { exceptions } = require('winston');
+const { logger } = require('../utils/logger');
 const db = require('../database/mysql');
 const EmployeeService = require('../service/EmployeeService');
 const Employee = db.employee;
-const Op = db.Sequelize.Op;
+var status = require('../utils/statusCode');
 
 
 // Instantiate the employee service
@@ -16,35 +16,39 @@ exports.create = (req, res) => {
 
 // Retrieve all Employee from the database.
 exports.findAll = (req, res) => {
+  var response = { status: status.Success };
   const firstName = req.query.firstName;
-  var condition = firstName ? { firstName: { [Op.like]: `%${firstName}%` } } : null;
-  employeeService.findAll(condition)
+  employeeService.findAll(firstName)
     .then(data => {
-      res.send(data);
+      response.successMessage = "Retrieving employees is successful.";
+      response.data = data;
+      res.send(response);
     })
     .catch(err => {
-      res.status(500).send({
-        message: "Some error occurred while retrieving employees."
-      });
+      logger.error(err.message, err);
+      response.status = status.SystemError;
+      response.errorMessage = "Some error occurred while retrieving employees.";
+      res.send(response);;
     });
 };
 
-// Find a single Employee with an id
+// Find a single Employee with an employee id
 exports.findOne = (req, res) => {
-  const id = req.params.employeeId;
-  Employee.findByPk(id)
+  const empId = req.params.employeeId;
+  employeeService.findEmployeeByEmpId(empId)
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Employee with id=${id}.`
+          message: `Cannot find Employee with id=${empId}.`
         });
       }
     })
     .catch(err => {
+      logger.error(err.message, err)
       res.status(500).send({
-        message: "Error retrieving Employee with id=" + id
+        message: `Error retrieving Employee with id=${empId}`
       });
     });
 };

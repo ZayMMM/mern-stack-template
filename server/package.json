@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "nodemon app.js",
     "build": "npm i",
-    "clean": "rm -rf node_modules", 
-    "reinstall": "npm run clean && npm install", 
+    "clean": "rm -rf node_modules",
+    "reinstall": "npm run clean && npm install",
     "rebuild": "npm run clean && npm install && npm run build"
   },
   "keywords": [],
@@ -22,14 +22,16 @@
     "express-async-errors": "^3.1.1",
     "helmet": "^6.0.1",
     "joi": "^17.9.1",
+    "js-base64": "^3.7.5",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
     "mysql2": "^3.2.0",
+    "node-jose": "^2.2.0",
     "nodemon": "^2.0.22",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "sequelize": "^6.30.0",
     "winston": "^3.8.2",
-    "winston-mysql-transport": "^0.1.2"
+    "winston-daily-rotate-file": "^4.7.1"
   }
 }
