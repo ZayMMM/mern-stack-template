@@ -20,7 +20,7 @@ exports.findAll = (req, res) => {
   const firstName = req.query.firstName;
   employeeService.findAll(firstName)
     .then(data => {
-      response.responseMessage = "Retrieving employees is successful.";
+      response.responseMessage = "Retrieving employee list is successful.";
       response.data = data;
       res.send(response);
     })
