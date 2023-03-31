@@ -6,17 +6,29 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "i18n": "formatjs extract '{pages,src/components}/**/*.js' --format simple --id-interpolation-pattern '[sha512:contenthash:base64:6]' --out-file translation/en.json"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.14",
+    "cookie": "^0.4.1",
+    "date-fns": "^2.29.3",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "i18next": "^22.4.13",
     "next": "13.2.4",
+    "nookies": "^2.5.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-datepicker": "^4.10.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
+    "react-intl": "^6.3.2"
+  },
+  "devDependencies": {
+    "@formatjs/cli": "^6.0.4",
+    "babel-plugin-formatjs": "^10.4.0"
   }
 }

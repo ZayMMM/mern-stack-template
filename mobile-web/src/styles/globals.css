@@ -1,8 +1,25 @@
+@font-face {
+    font-family: anuphanMedium;
+    src: url('../../public/fonts/Anuphan-Medium.otf');
+    font-style: normal;
+    font-weight: 500;
+  }
+  
+  @font-face {
+    font-family: anuphanLight;
+    src: url('../../public/fonts/Anuphan-Light.otf');
+    font-style: normal;
+    font-weight: 300;
+  }
+
 body{
     margin: 0;
     overflow-x: hidden;
+    font-family: anuphanLight;
+    font-size: 14px;
 }
 
 * {
     box-sizing: border-box;
 }
+

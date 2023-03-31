@@ -1,4 +1,4 @@
-import ApprovalList from "@/components/approval-list/ApprovalList";
+import ApprovalList from "@/components/Approval/ApprovalList";
 
 const ApprovalPage = () => {
   return (

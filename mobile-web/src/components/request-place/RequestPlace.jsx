@@ -1,8 +1,10 @@
+import { Container } from "@mui/material";
+
 const RequestPlace = () => {
   return (
-    <>
-      <h1>Request Tab</h1>
-    </>
+    <Container maxWidth="sm">
+      <h2>Request Tab</h2>
+    </Container>
   );
 };
 

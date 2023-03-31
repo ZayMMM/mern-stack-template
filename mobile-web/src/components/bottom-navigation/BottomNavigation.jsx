@@ -9,8 +9,10 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Image from "next/image";
 import NextLink from "next/link";
 import Styles from "../../styles/BottomNavigation.module.css";
+import { useIntl } from "react-intl";
 
 const BottomNav = () => {
+  const intl = useIntl();
   return (
     <>
       <AppBar
@@ -32,14 +34,20 @@ const BottomNav = () => {
         >
           <NextLink href="/" passHref className={Styles.bottonNavigationLink}>
             <BottomNavigationAction
-              label="Reserve"
-              value="Reserve"
+              label={intl.formatMessage({
+                id: "reserve",
+                defaultMessage: "Reserve",
+              })}
+              value={intl.formatMessage({
+                id: "reserve",
+                defaultMessage: "Reserve",
+              })}
               showLabel
               icon={
                 <Image
                   src={"/images/chair@2x.png"}
-                  width={25}
-                  height={25}
+                  width={20}
+                  height={20}
                   alt="Request"
                 />
               }
@@ -52,14 +60,20 @@ const BottomNav = () => {
             className={Styles.bottonNavigationLink}
           >
             <BottomNavigationAction
-              label="Booking"
-              value="Booking"
+              label={intl.formatMessage({
+                id: "booking",
+                defaultMessage: "Booking",
+              })}
+              value={intl.formatMessage({
+                id: "booking",
+                defaultMessage: "Booking",
+              })}
               showLabel
               icon={
                 <Image
                   src={"/images/eye@2x.png"}
-                  width={25}
-                  height={25}
+                  width={20}
+                  height={20}
                   alt="Request"
                 />
               }
@@ -72,14 +86,20 @@ const BottomNav = () => {
             className={Styles.bottonNavigationLink}
           >
             <BottomNavigationAction
-              label="Request"
-              value="Request"
+              label={intl.formatMessage({
+                id: "request",
+                defaultMessage: "Request",
+              })}
+              value={intl.formatMessage({
+                id: "request",
+                defaultMessage: "Request",
+              })}
               showLabel
               icon={
                 <Image
                   src={"/images/building@2x.png"}
-                  width={25}
-                  height={25}
+                  width={20}
+                  height={20}
                   alt="Request"
                 />
               }
@@ -91,14 +111,20 @@ const BottomNav = () => {
             className={Styles.bottonNavigationLink}
           >
             <BottomNavigationAction
-              label="Approve"
-              value="Approve"
+              label={intl.formatMessage({
+                id: "approve",
+                defaultMessage: "Approve",
+              })}
+              value={intl.formatMessage({
+                id: "approve",
+                defaultMessage: "Approve",
+              })}
               showLabel
               icon={
                 <Image
                   src={"/images/check@2x.png"}
-                  width={25}
-                  height={25}
+                  width={20}
+                  height={20}
                   alt="Approve"
                 />
               }

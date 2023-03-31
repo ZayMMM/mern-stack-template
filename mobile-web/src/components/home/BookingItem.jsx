@@ -29,9 +29,8 @@ const BookingItem = () => {
         </Typography>
         <Typography
           component={"span"}
-          fontSize={"16px"}
-          fontWeight={600}
-          sx={{ color: "#07A889" }}
+          fontSize={"14px"}
+          sx={{ color: "#82d3c4" }}
         >
           08:00-09:00
         </Typography>

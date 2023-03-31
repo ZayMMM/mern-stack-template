@@ -1,6 +1,7 @@
 import MainLayout from "@/components/layout/MainLayout";
 import "@/styles/globals.css";
 import Head from "next/head";
+import { LocaleProvider } from "@/hooks/userLocale";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -11,9 +12,9 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainLayout>
+      <LocaleProvider>
         <Component {...pageProps} />
-      </MainLayout>
+      </LocaleProvider>
     </>
   );
 }
