@@ -1,23 +1,29 @@
-import mysql from  'mysql';
+const dbConfig = require("./db.config");
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root123',
-    database: 'test'
-})
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+  host: dbConfig.HOST,
+  dialect: dbConfig.dialect,
+  operatorsAliases: false,
+  define: {
+    timestamps: false
+},
 
+  pool: {
+    max: dbConfig.pool.max,
+    min: dbConfig.pool.min,
+    acquire: dbConfig.pool.acquire,
+    idle: dbConfig.pool.idle
+  }
+});
 
-async function connect() {
-    connection.connect()
+const db = {};
 
-    connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
-        if (err) throw err
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-        console.log('The solution is: ', rows[0].solution)
-    })
+db.employee = require('../models/employeeModel')(sequelize, Sequelize);
 
-    connection.end();
-}
+module.exports = db;
 
-export default connect;
+ 
