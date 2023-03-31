@@ -18,6 +18,10 @@ const status = {
     InvalidParameter: {
         code: '501',
         message: 'Invalid Parameters',
+    },
+    Unauthorized: {
+        code: '401',
+        message: 'Unauthorized'
     }
 }
 

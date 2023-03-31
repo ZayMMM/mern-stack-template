@@ -1,11 +1,12 @@
+require('dotenv').config();
 const db = require('../database/mysql');
 const Employee = db.employee;
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = '63f8e5f87d7193001238f150@hgusvtcb^doF6y@^UCwdZPHfg$@$OD|(a%gpDdB$XaFuklfCV!';
-const { StringDecoder } = require('node:string_decoder');
-const decoder = new StringDecoder('utf8');
+const JWT_SECRET = process.env.JWT_SECRET;
+var status = require('../utils/statusCode');
 
 const auth = async (req, res, next) => {
+  var response = { status: status.Success };
   if (
     req.headers &&
     req.headers.authorization &&
@@ -24,17 +25,22 @@ const auth = async (req, res, next) => {
       });
 
       if (!employee) {
-        res.status(401).json({ error: "Unauthorized." });
-        return;
+        response.status = status.ObjectNotFound;
+        response.responseMessage = "Employee not found";
+        return res.send(response);
       }
 
       next();
     } catch (error) {
       console.log(error);
-      res.status(401).json({ error: "Unauthorized.." });
+      response.status = status.Unauthorized;
+      response.responseMessage = error.message;
+      return res.send(response);
     }
   } else {
-    res.status(401).json({ error: "Unauthorized..." });
+    response.status = status.Unauthorized;
+    response.responseMessage = "Unauthorized";
+    return res.send(response);
   }
 };
 

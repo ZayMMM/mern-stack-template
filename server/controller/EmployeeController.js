@@ -20,36 +20,39 @@ exports.findAll = (req, res) => {
   const firstName = req.query.firstName;
   employeeService.findAll(firstName)
     .then(data => {
-      response.successMessage = "Retrieving employees is successful.";
+      response.responseMessage = "Retrieving employees is successful.";
       response.data = data;
       res.send(response);
     })
     .catch(err => {
       logger.error(err.message, err);
       response.status = status.SystemError;
-      response.errorMessage = "Some error occurred while retrieving employees.";
+      response.responseMessage = "Some error occurred while retrieving employees.";
       res.send(response);;
     });
 };
 
 // Find a single Employee with an employee id
 exports.findOne = (req, res) => {
+  var response = { status: status.Success };
   const empId = req.params.employeeId;
   employeeService.findEmployeeByEmpId(empId)
     .then(data => {
       if (data) {
-        res.send(data);
+        response.responseMessage = "Retrieving employees is successful.";
+        response.data = data;
+        res.send(response);
       } else {
-        res.status(404).send({
-          message: `Cannot find Employee with id=${empId}.`
-        });
+        response.status = status.ObjectNotFound;
+        response.responseMessage = `Cannot find Employee with id=${empId}.`
+        res.send(response);
       }
     })
     .catch(err => {
       logger.error(err.message, err)
-      res.status(500).send({
-        message: `Error retrieving Employee with id=${empId}`
-      });
+      response.status = status.SystemError;
+      response.responseMessage = `Error retrieving Employee with id=${empId}`
+      res.send(response);
     });
 };
 

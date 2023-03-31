@@ -4,7 +4,6 @@ const app = express();
 const appLogger = require('./middleware/logger');
 const bodyParser = require('body-parser');
 const routes = require('./routes/index');
-
 const db = require('./database/mysql');
 
 app.use(bodyParser.urlencoded({
