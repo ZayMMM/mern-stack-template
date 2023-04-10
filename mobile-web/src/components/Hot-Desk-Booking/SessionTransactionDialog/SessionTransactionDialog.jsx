@@ -2,15 +2,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { Button } from "@mui/material";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { SELECT_BOOKING_ROOM_ROUTE } from "@/config/route";
 
-const ChooseMeetingRoomDialog = (props) => {
-  const router = useRouter();
-
+const SessionTransactionDialog = (props) => {
   return (
     <>
       <Dialog
@@ -35,24 +30,29 @@ const ChooseMeetingRoomDialog = (props) => {
             paddingBottom: "20px",
           }}
         >
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#09a986",
-              textTransform: "none",
-              borderRadius: "7px",
-              "&:hover": {
-                backgroundColor: "#09a986",
-              },
-            }}
-            onClick={() => router.push(SELECT_BOOKING_ROOM_ROUTE)}
+          <NextLink
+            href={"/hot-desk-booking/zones"}
+            passHref
+            style={{ textDecoration: "none", color: "inherit" }}
           >
-            Choose a meeting room
-          </Button>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#09a986",
+                textTransform: "none",
+                borderRadius: "7px",
+                "&:hover": {
+                  backgroundColor: "#09a986",
+                },
+              }}
+            >
+              Select More
+            </Button>
+          </NextLink>
         </DialogActions>
       </Dialog>
     </>
   );
 };
 
-export default ChooseMeetingRoomDialog;
+export default SessionTransactionDialog;

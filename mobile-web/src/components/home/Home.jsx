@@ -3,8 +3,15 @@ import { Grid, Typography } from "@mui/material";
 import { Box, display } from "@mui/system";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import BookingList from "./BookingList";
+import { useLocale } from "@/hooks/userLocale";
 
-const Home = () => {
+const Home = ({ lang }) => {
+  const { setLocale } = useLocale();
+
+  if (lang) {
+    setLocale(lang);
+  }
+
   return (
     <>
       {" "}

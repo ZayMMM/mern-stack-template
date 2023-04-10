@@ -1,4 +1,4 @@
-import BottomNav from "../bottom-navigation/BottomNavigation";
+import BottomNav from "../Bottom-Navigation/BottomNavigation";
 
 const { Box } = require("@mui/system");
 

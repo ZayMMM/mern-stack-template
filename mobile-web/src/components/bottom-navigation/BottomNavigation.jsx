@@ -10,9 +10,40 @@ import Image from "next/image";
 import NextLink from "next/link";
 import Styles from "../../styles/BottomNavigation.module.css";
 import { useIntl } from "react-intl";
+import { useRouter } from "next/router";
+import React from "react";
+import {
+  APPROVAL_PLACE_ROUTE,
+  APPROVAL_ROUTE,
+  BOOKING_ROUTE,
+  HOME_ROUTE,
+  REQUEST_PLACE_ROUTE,
+} from "@/config/route";
+import { HOT_DESK_BOOKING } from "@/config/route";
 
 const BottomNav = () => {
   const intl = useIntl();
+
+  const router = useRouter();
+
+  const handleRouteChange = (event, newValue) => {
+    switch (newValue) {
+      case "HOT-DESK-BOOKING":
+        router.push(HOT_DESK_BOOKING);
+        break;
+      case "BOOKING":
+        router.push(BOOKING_ROUTE);
+        break;
+      case "REQUEST":
+        router.push(REQUEST_PLACE_ROUTE);
+        break;
+      case "APPROVAL":
+        router.push(APPROVAL_ROUTE);
+        break;
+      default:
+    }
+  };
+
   return (
     <>
       <AppBar
@@ -20,7 +51,6 @@ const BottomNav = () => {
         sx={{ top: "auto", bottom: 0, backgroundColor: "transparent" }}
       >
         <BottomNavigation
-          showLabels
           sx={{
             boxShadow: "none",
             bgcolor: "#fafbfb",
@@ -31,105 +61,72 @@ const BottomNav = () => {
               paddingTop: "5px",
             },
           }}
+          showLabels
+          onChange={handleRouteChange}
         >
-          <NextLink href="/" passHref className={Styles.bottonNavigationLink}>
-            <BottomNavigationAction
-              label={intl.formatMessage({
-                id: "reserve",
-                defaultMessage: "Reserve",
-              })}
-              value={intl.formatMessage({
-                id: "reserve",
-                defaultMessage: "Reserve",
-              })}
-              showLabel
-              icon={
-                <Image
-                  src={"/images/chair@2x.png"}
-                  width={20}
-                  height={20}
-                  alt="Request"
-                />
-              }
-            />
-          </NextLink>
+          <BottomNavigationAction
+            label={intl.formatMessage({
+              id: "reserve",
+              defaultMessage: "Reserve",
+            })}
+            value="HOT-DESK-BOOKING"
+            icon={
+              <Image
+                src={"/images/chair@2x.png"}
+                width={20}
+                height={20}
+                alt="Request"
+              />
+            }
+          />
 
-          <NextLink
-            href="/booking"
-            passHref
-            className={Styles.bottonNavigationLink}
-          >
-            <BottomNavigationAction
-              label={intl.formatMessage({
-                id: "booking",
-                defaultMessage: "Booking",
-              })}
-              value={intl.formatMessage({
-                id: "booking",
-                defaultMessage: "Booking",
-              })}
-              showLabel
-              icon={
-                <Image
-                  src={"/images/eye@2x.png"}
-                  width={20}
-                  height={20}
-                  alt="Request"
-                />
-              }
-            />
-          </NextLink>
+          <BottomNavigationAction
+            label={intl.formatMessage({
+              id: "booking",
+              defaultMessage: "Booking",
+            })}
+            value="BOOKING"
+            icon={
+              <Image
+                src={"/images/eye@2x.png"}
+                width={20}
+                height={20}
+                alt="Request"
+              />
+            }
+          />
 
-          <NextLink
-            href="/request-place"
-            passHref
-            className={Styles.bottonNavigationLink}
-          >
-            <BottomNavigationAction
-              label={intl.formatMessage({
-                id: "request",
-                defaultMessage: "Request",
-              })}
-              value={intl.formatMessage({
-                id: "request",
-                defaultMessage: "Request",
-              })}
-              showLabel
-              icon={
-                <Image
-                  src={"/images/building@2x.png"}
-                  width={20}
-                  height={20}
-                  alt="Request"
-                />
-              }
-            />
-          </NextLink>
-          <NextLink
-            href="/approval"
-            passHref
-            className={Styles.bottonNavigationLink}
-          >
-            <BottomNavigationAction
-              label={intl.formatMessage({
-                id: "approve",
-                defaultMessage: "Approve",
-              })}
-              value={intl.formatMessage({
-                id: "approve",
-                defaultMessage: "Approve",
-              })}
-              showLabel
-              icon={
-                <Image
-                  src={"/images/check@2x.png"}
-                  width={20}
-                  height={20}
-                  alt="Approve"
-                />
-              }
-            />
-          </NextLink>
+          <BottomNavigationAction
+            label={intl.formatMessage({
+              id: "request",
+              defaultMessage: "Request",
+            })}
+            value="REQUEST"
+            icon={
+              <Image
+                src={"/images/building@2x.png"}
+                width={20}
+                height={20}
+                alt="Request"
+              />
+            }
+          />
+
+          <BottomNavigationAction
+            label={intl.formatMessage({
+              id: "approve",
+              defaultMessage: "Approve",
+            })}
+            value="APPROVAL"
+            icon={
+              <Image
+                src={"/images/check@2x.png"}
+                width={20}
+                height={20}
+                alt="Approve"
+              />
+            }
+          />
         </BottomNavigation>
       </AppBar>
     </>

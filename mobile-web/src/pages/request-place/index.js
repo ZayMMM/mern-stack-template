@@ -1,4 +1,4 @@
-import RequestPlace from "@/components/request-place/RequestPlace";
+import RequestPlace from "@/components/Request-Place/RequestPlace";
 
 const RequestPlacePage = () => {
   return (

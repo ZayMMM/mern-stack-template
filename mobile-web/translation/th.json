@@ -23,8 +23,14 @@
   "successfully.book.a.meeting": "Successfully booked a meeting",
   "booking.summary": "Booking Summary",
   "confirm": "Confirm",
-  "reserve": "Reserve",
-  "booking": "Booking",
-  "request": "Request",
-  "approve": "Approve"
+  "reserve": "จองที่นั่ง",
+  "booking": "จองห้องประชุม",
+  "request": "ขอเข้าสถานที่",
+  "approve": "รายการอนุมัติ",
+  "reserve.a.seat": "Reserve a seat",
+  "equipments": "Equipments",
+  "confirm.seat.reservation": "Confirm seat reservation",
+  "first.name": "First Name",
+  "last.name": "Last Name",
+  "company": "Company"
 }

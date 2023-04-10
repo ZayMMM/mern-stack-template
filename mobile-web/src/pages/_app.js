@@ -1,4 +1,4 @@
-import MainLayout from "@/components/layout/MainLayout";
+import MainLayout from "@/components/Layout/MainLayout";
 import "@/styles/globals.css";
 import Head from "next/head";
 import { LocaleProvider } from "@/hooks/userLocale";

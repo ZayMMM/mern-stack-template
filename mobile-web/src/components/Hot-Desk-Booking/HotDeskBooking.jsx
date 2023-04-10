@@ -1,43 +1,57 @@
 import {
+  Box,
   Button,
   Container,
   Divider,
   FormControl,
   MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
-import { Box } from "@mui/system";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { compareAsc, format } from "date-fns";
 import NextLink from "next/link";
-import ChooseMeetingRoomDialog from "./ChooseRoomDialog/ChooseRoomDialog";
+import React from "react";
+import DatePicker from "react-datepicker";
 import { useIntl } from "react-intl";
-import { useLocale } from "@/hooks/userLocale";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
+import SessionTransactionDialog from "./SessionTransactionDialog/SessionTransactionDialog";
+import { useRouter } from "next/router";
+import { EMPLOYEE_DIRECTORY } from "@/config/route";
+import ExternalPersonForm from "./ExternalPersonFormDialog/ExternalPersonForm";
 
-const Booking = ({ lang }) => {
+const HotDeskBooking = () => {
   const intl = useIntl();
-  const [age, setAge] = React.useState("");
+  const [area, setArea] = React.useState("");
+  const [location, setLocation] = React.useState("1");
+  const [bookingFor, setBookingFor] = React.useState("1");
   const [startDate, setStartDate] = React.useState(new Date());
   const [dateSelectLabel, setDateSelectLabel] = React.useState("Select >");
-  const [location, setLocation] = React.useState("1");
-  const [facility, setFacility] = React.useState("1");
-  const [additionalServices, setAdditionalServices] = React.useState([]);
-  const [isChooseRoomDialogOpen, setIsChooseRoomDialogOpen] =
+  const [equipments, setEquipments] = React.useState([]);
+  const [isSessionTransactionDialogOpen, setIsSessionTransactionDialogOpen] =
     React.useState(false);
-  const { setLocale } = useLocale();
 
-  console.log("Lang code from component " + lang);
+  const [isOpenExternalPersonForm, SetIsOpenExternalPersonForm] =
+    React.useState(false);
 
-  if (lang != null) {
-    setLocale(lang);
-  }
+  const router = useRouter();
+
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  };
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setArea(event.target.value);
+  };
+
+  const handleBookingForChange = (event) => {
+    setBookingFor(event.target.value);
+
+    if (event.target.value === 2) {
+      router.push(EMPLOYEE_DIRECTORY);
+    } else if (event.target.value === 3) {
+      SetIsOpenExternalPersonForm(true);
+    }
   };
 
   const handleBookingDateChange = (date) => {
@@ -45,31 +59,19 @@ const Booking = ({ lang }) => {
     setStartDate(date);
   };
 
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  };
-
-  const handleFacilityChange = (event) => {
-    setFacility(event.target.value);
-  };
-
-  const handleAdditionalServiceChange = (event) => {
-    console.log(event.target.value);
+  const handleEquipmentChange = (event) => {
     const {
       target: { value },
     } = event;
-    setAdditionalServices(
-      // On autofill we get a the stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setEquipments(typeof value === "string" ? value.split(",") : value);
   };
 
-  const handleChooseRoomDialogOpen = () => {
-    setIsChooseRoomDialogOpen(true);
+  const handleSessionDialogDialogOpen = () => {
+    setIsSessionTransactionDialogOpen(true);
   };
 
-  const handleChooseRoomDialogClose = () => {
-    setIsChooseRoomDialogOpen(false);
+  const handleSessionDialogClose = () => {
+    setIsSessionTransactionDialogOpen(false);
   };
 
   return (
@@ -96,8 +98,8 @@ const Booking = ({ lang }) => {
       </NextLink>
       <Typography component={"p"} mt={1} sx={{ textAlign: "center" }}>
         {intl.formatMessage({
-          id: "book.a.meeting.room",
-          defaultMessage: "Book a meeting room",
+          id: "reserve.a.seat",
+          defaultMessage: "Reserve a seat",
         })}
       </Typography>
       <Box
@@ -156,9 +158,9 @@ const Booking = ({ lang }) => {
             <Select
               labelId="demo-select-small"
               id="demo-select-small"
-              value={age}
+              value={area}
               displayEmpty
-              label="Age"
+              label="Area"
               sx={{ fontSize: "14px" }}
               onChange={handleChange}
             >
@@ -188,23 +190,33 @@ const Booking = ({ lang }) => {
         >
           <Typography component={"span"} fontSize={14}>
             {intl.formatMessage({
-              id: "number.of.participants",
-              defaultMessage: "Number of Participants",
+              id: "for",
+              defaultMessage: "For",
             })}
           </Typography>
-          <NextLink
-            href={"/booking/choose-participants"}
-            passHref
-            style={{ textDecoration: "none", color: "#000" }}
-          >
-            <Typography component={"span"} fontSize={14}>
-              {intl.formatMessage({
-                id: "please.specify",
-                defaultMessage: "Please specify >",
-              })}
-            </Typography>
-          </NextLink>
+          <FormControl sx={{ minWidth: 120 }} size="small" variant="standard">
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={bookingFor}
+              displayEmpty
+              label="For"
+              sx={{ fontSize: "14px" }}
+              onChange={handleBookingForChange}
+            >
+              <MenuItem value={1} fontSize={"14px"}>
+                Self
+              </MenuItem>
+              <MenuItem value={2} fontSize={"14px"}>
+                Others (Employees)
+              </MenuItem>
+              <MenuItem value={3} fontSize={"14px"}>
+                Others (External Persons)
+              </MenuItem>
+            </Select>
+          </FormControl>
         </Box>
+        {bookingFor === 3 && <ExternalPersonForm />}
       </Box>
       <Box
         sx={{
@@ -228,7 +240,7 @@ const Booking = ({ lang }) => {
               defaultMessage: "Date",
             })}
           </Typography>
-          <div>
+          <Box>
             <DatePicker
               selected={startDate}
               onChange={handleBookingDateChange}
@@ -236,7 +248,7 @@ const Booking = ({ lang }) => {
                 <Typography fontSize={"14px"}>{dateSelectLabel}</Typography>
               }
             />
-          </div>
+          </Box>
         </Box>
         <Divider />
         <Box
@@ -254,7 +266,7 @@ const Booking = ({ lang }) => {
             })}
           </Typography>
           <NextLink
-            href={"/booking/select-time-period"}
+            href={"/hot-desk-booking/select-time-period"}
             passHref
             style={{ textDecoration: "none", color: "#000" }}
           >
@@ -266,94 +278,7 @@ const Booking = ({ lang }) => {
             </Typography>
           </NextLink>
         </Box>
-        <Divider />
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "15px 15px",
-          }}
-        >
-          <Typography component={"span"} fontSize={14}>
-            {intl.formatMessage({
-              id: "facilitate.reading",
-              defaultMessage: "Facilitate Reading",
-            })}
-          </Typography>
-          <FormControl sx={{ minWidth: 120 }} size="small" variant="standard">
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={facility}
-              displayEmpty
-              sx={{ fontSize: "14px" }}
-              onChange={handleFacilityChange}
-            >
-              <MenuItem value={1} fontSize={"14px"}>
-                Whiteboard
-              </MenuItem>
-              <MenuItem value={1} fontSize={"14px"}>
-                Projector
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Divider />
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "15px 15px",
-          }}
-        >
-          <Typography component={"span"} fontSize={14}>
-            {intl.formatMessage({
-              id: "additional.services",
-              defaultMessage: "Additional Services",
-            })}
-          </Typography>
-          <FormControl sx={{ minWidth: 120 }} size="small" variant="standard">
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={additionalServices}
-              displayEmpty
-              multiple
-              sx={{ fontSize: "14px" }}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <em>no &gt;</em>;
-                }
-
-                return selected.join(", ");
-              }}
-              onChange={handleAdditionalServiceChange}
-            >
-              <MenuItem disabled value="">
-                <em>no &gt;</em>
-              </MenuItem>
-              <MenuItem value={"snacks"} fontSize={"14px"}>
-                Snacks
-              </MenuItem>
-              <MenuItem value={"paper, pencil"} fontSize={"14px"}>
-                Paper, pencil
-              </MenuItem>
-              <MenuItem value={"Name tab"} fontSize={"14px"}>
-                Name tab
-              </MenuItem>
-              <MenuItem value={"Sound System"} fontSize={"14px"}>
-                Sound System
-              </MenuItem>
-              <MenuItem value={"Lecture table"} fontSize={"14px"}>
-                Lecture table
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
       </Box>
-
       <Box
         sx={{
           backgroundColor: "#f0f0f0",
@@ -368,48 +293,46 @@ const Booking = ({ lang }) => {
             alignItems: "center",
             justifyContent: "space-between",
             padding: "15px 15px",
+            flexWrap: "wrap",
           }}
         >
           <Typography component={"span"} fontSize={14}>
             {intl.formatMessage({
-              id: "meeting.topic",
-              defaultMessage: "Meeting Topic",
+              id: "equipments",
+              defaultMessage: "Equipments",
             })}
           </Typography>
-          <TextField
-            id="standard-multiline-flexible"
-            sx={{ fontSize: "14px" }}
-            placeholder={intl.formatMessage({
-              id: "meeting.topic",
-              defaultMessage: "Meeting Topic",
-            })}
-            variant="standard"
-          />
-        </Box>
-        <Divider />
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "10px 10px",
-          }}
-        >
-          <Typography component={"span"} fontSize={14}>
-            {intl.formatMessage({
-              id: "contact.number",
-              defaultMessage: "Contact Number",
-            })}
-          </Typography>
-          <TextField
-            id="standard-multiline-flexible"
-            sx={{ fontSize: "14px" }}
-            placeholder={intl.formatMessage({
-              id: "contact.number",
-              defaultMessage: "Contact Number",
-            })}
-            variant="standard"
-          />
+          <FormControl sx={{ minWidth: 120 }} size="small" variant="standard">
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={equipments}
+              displayEmpty
+              multiple
+              sx={{ fontSize: "14px" }}
+              renderValue={(selected) => {
+                if (selected.length === 0) {
+                  return <em>no &gt;</em>;
+                }
+
+                return selected.join(", ");
+              }}
+              onChange={handleEquipmentChange}
+            >
+              <MenuItem disabled value="">
+                <em>no &gt;</em>
+              </MenuItem>
+              <MenuItem value={"Monitor"} fontSize={"14px"}>
+                Monitor
+              </MenuItem>
+              <MenuItem value={"Port Convertor"} fontSize={"14px"}>
+                Port Convertor
+              </MenuItem>
+              <MenuItem value={"Adjustable Table"} fontSize={"14px"}>
+                Adjustable Table
+              </MenuItem>
+            </Select>
+          </FormControl>
         </Box>
       </Box>
 
@@ -417,7 +340,7 @@ const Booking = ({ lang }) => {
         <Button
           variant="contained"
           fullWidth
-          onClick={handleChooseRoomDialogOpen}
+          onClick={handleSessionDialogDialogOpen}
           sx={{
             textAlign: "center",
             maxWidth: "150px",
@@ -435,12 +358,12 @@ const Booking = ({ lang }) => {
         </Button>
       </Box>
 
-      <ChooseMeetingRoomDialog
-        open={isChooseRoomDialogOpen}
-        handleClose={handleChooseRoomDialogClose}
+      <SessionTransactionDialog
+        open={isSessionTransactionDialogOpen}
+        handleClose={handleSessionDialogClose}
       />
     </Container>
   );
 };
 
-export default Booking;
+export default HotDeskBooking;

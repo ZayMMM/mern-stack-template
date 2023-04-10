@@ -27,5 +27,11 @@
   "reserve": "Reserve",
   "booking": "Booking",
   "request": "Request",
-  "approve": "Approve"
+  "approve": "Approve",
+  "reserve.a.seat": "Reserve a seat",
+  "equipments": "Equipments",
+  "confirm.seat.reservation": "Confirm seat reservation",
+  "first.name": "First Name",
+  "last.name": "Last Name",
+  "company": "Company"
 }
