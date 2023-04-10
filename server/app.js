@@ -1,9 +1,10 @@
 require("express-async-errors");
 const express = require('express');
 const app = express();
-const appLogger = require('./middleware/logger');
+const { logger } = require('./utils/loggerUtils');
+const appLogger = require('./middleware/loggerMiddleware');
 const bodyParser = require('body-parser');
-const routes = require('./routes/index');
+const routes = require('./routes/indexRoutes');
 const db = require('./database/mysql');
 
 app.use(bodyParser.urlencoded({
@@ -19,6 +20,7 @@ db.sequelize.sync()
         console.log("Synced db.");
     })
     .catch((err) => {
+        logger.error("Error syncing db.", err);
         console.log("Failed to sync db: " + err.message);
     });
 

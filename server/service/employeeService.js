@@ -1,4 +1,4 @@
-const { logger } = require('../utils/logger');
+const { logger } = require('../utils/loggerUtils');
 const db = require('../database/mysql');
 const { employeeModel } = db.employee;
 const Op = db.Sequelize.Op;

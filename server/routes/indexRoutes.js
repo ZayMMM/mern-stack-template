@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const employeeRoute = require('../routes/employee');
-const authRouter = require('./auth');
+const employeeRoute = require('./employeeRoutes');
+const authRouter = require('./authRoutes');
 
 router.get('/', (req, res) => {
     res.send("8i Access Control API is available !");

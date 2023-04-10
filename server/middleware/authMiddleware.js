@@ -3,7 +3,7 @@ const db = require('../database/mysql');
 const Employee = db.employee;
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
-var status = require('../utils/statusCode');
+var status = require('../utils/statusCodeUtils');
 
 const auth = async (req, res, next) => {
   var response = { status: status.Success };

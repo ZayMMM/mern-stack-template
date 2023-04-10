@@ -1,8 +1,8 @@
-const { logger } = require('../utils/logger');
+const { logger } = require('../utils/loggerUtils');
 const db = require('../database/mysql');
-const EmployeeService = require('../service/EmployeeService');
+const EmployeeService = require('../service/employeeService');
 const Employee = db.employee;
-var status = require('../utils/statusCode');
+var status = require('../utils/statusCodeUtils');
 
 
 // Instantiate the employee service
